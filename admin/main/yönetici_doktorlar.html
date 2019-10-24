@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../css/adminstyle.css">
+    <link href="../css/style.css" rel="stylesheet">
+    <title>Doktorlar</title>
+</head>
+<body onload="doktorListesi()">
+
+<header class="ana_menu" style="height: 80px">
+    <div>
+        <div class="logo">
+            <div>
+                <img src="../images/logo.png" style="padding-top: 20px;width: 200px">
+            </div>
+        </div>
+        <div style="float: right; padding-bottom: 20px; padding-right: 50px" >
+            <ul class="menu">
+                <li><a href="yonetici_anasayfa.html">ANA SAYFA</a></li>
+                <li><a href="yonetici_hakkimizda.html">HAKKIMIZDA</a></li>
+                <li><a style="color:#3977FF"  href="yönetici_doktorlar.html">DOKTORLARIMIZ</a></li>
+                <li><a href="yönetici_iletisim.html">İLETİŞİM</a></li>
+                <li><a href="index.html"><button style="margin-top: 7px;margin-left: 20px" class="button" onclick="cikis()">Çıkış Yap</button></a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+
+<div style="background-image: url(../images/banner-bg.jpg);height: 350px;width: 100%;margin-top: 100px">
+    <div style="float: right;margin-top: 150px">
+        <h1 align="right" style="color: #ffffff;padding-right:180px;font-size: 40px">Doktorlarımız</h1>
+    </div>
+    <div   style="padding-top:18px;margin-left: 100px;margin-right: 925px" >
+        <div class="klinik_cerceve" style="margin: 10px;padding: 20px">
+            <label>
+                <span style="font-size: 20px">Bölüm :</span><br>
+                <input class="input" type="text" style=" width: 250px;margin-bottom: 10px" name="bolum" id="doktor_bolum">
+            </label><br>
+
+            <label>
+                <span style="font-size: 20px">İsim Soyisim :</span><br>
+                <input class="input" type="text" style="width: 250px;margin-bottom: 10px"name="isim" id="doktor_isim">
+            </label><br>
+            <label>
+                <span style="font-size: 20px">İletişim :</span><br>
+                <input class="input" type="number" style="width: 250px" name="iletisim" id="doktor_numara">
+            </label><br>
+
+
+            <label>
+                <span></span>
+                <input style="margin-top: 10px" type="button" onclick="doktor_ekle()" class="button" value="Doktor Ekle"  id="ekleButon" />
+            </label>
+        </div>
+    </div>
+    <div id="cardGorunum" style="margin-top: 20px">
+
+    </div>
+
+    </div>
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-storage.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase.js"></script>
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyC_hdysQMkDUxJ1pM3cvuccc3NkVvq0pbQ",
+        authDomain: "umuthastahanesi-68cb3.firebaseapp.com",
+        databaseURL: "https://umuthastahanesi-68cb3.firebaseio.com",
+        projectId: "umuthastahanesi-68cb3",
+        storageBucket: "umuthastahanesi-68cb3.appspot.com",
+        messagingSenderId: "828637673911",
+        appId: "1:828637673911:web:94cf95919fee2ee2f79032",
+        measurementId: "G-R6PNK9SC1G"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+</script>
+
+
+<script>
+
+    db = firebase.database();
+    var dktrIsim=document.getElementById("doktor_isim");
+    var dktrBolum=document.getElementById("doktor_bolum");
+    var dktrNo=document.getElementById("doktor_numara");
+
+    function doktor_ekle() {
+
+        var key = db.ref().child("Doktor").push().key;
+        var doktor1=new Doktor(key,dktrIsim.value,dktrNo.value,dktrBolum.value);
+        db.ref("Doktor/"+key).set(doktor1);
+        dktrNo.value="";
+        dktrBolum.value="";
+        dktrIsim.value="";
+        window.alert('doktor eklendi.');
+    }
+
+    class Doktor{
+        constructor(id,isim,no,bolum){
+            this._id=id;
+            this._isim=isim;
+            this._no=no;
+            this._bolum=bolum;
+        }
+        get id(){
+            return this._id;
+        }
+        get isim(){
+            return this._isim;
+        }
+
+        get no(){
+            return this._no;
+        }
+        get bolum(){
+            return this._bolum;
+        }
+    }
+
+    function doktorListesi() {
+        var doktor=firebase.database().ref("Doktor");
+        doktor.on("child_added",function (data) {
+            var doktorValue=data.val();
+            document.getElementById("cardGorunum").innerHTML+=`
+
+        <div class="doktorlarımız_cerceve" style="width: 200px;float: left;margin-top: 30px;margin-left: 42px;margin-right: 10px">
+         <img width="200px" height="200px" src="../images/doktorlar/doktor1.jpg">
+        <h1>${doktorValue._bolum}</h1>
+        <p>${doktorValue._isim}</p>
+        <p>${doktorValue._no}</p>
+        <table>
+        <tr>
+        <td>
+        <button class="button" style="background-color: #ffe400;margin-top: 10px;margin-left: 9px;margin-right: 5px"
+        onclick="doktorGuncelle('${doktorValue._id}','${doktorValue._bolum}','${doktorValue._isim}','${doktorValue._no}')">Güncelle</button>
+        <div id="myModal" class="modal">
+        <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>Doktor Bilgilerini Güncelle</p>
+
+        <div style="margin-top: 10px;background-color: #ffffff;padding-left: 90px;">
+        <label >
+        <span>Bölüm :</span><br><input class="input" type="text" name="bolum" id="pop_up_bolum">
+        </label><br>
+         <label>
+        <span>İsim Soyisim :</span><br><input class="input" type="text" name="isim" id="pop_up_isim">
+        </label><br>
+         <label>
+        <span>İletişim :</span><br><input class="input" type="number" name="no" id="pop_up_no">
+        </label>
+
+            <label>
+                <span></span>
+                <button style="margin-top: 10px" type="button" id="doktorkydt" class="button"  >Kaydet</button>
+            </label>
+        </div>
+        </div>
+        </div>
+       </td>
+       <td>
+       <button class="button" style="background-color: #ff0300;margin-top: 10px;"
+        onclick="doktorSil('${doktorValue._id}')">Sil</button>
+
+       </td>
+       </tr>
+        </table>
+
+       </div>
+         `
+        });
+    }
+
+    function doktorGuncelle(_id,_bolum,_isim,_no) {
+        var bolumGetir=document.getElementById('pop_up_bolum');
+        var isimGetir=document.getElementById('pop_up_isim');
+        var noGetir=document.getElementById('pop_up_no');
+        isimGetir.value=_isim;
+        bolumGetir.value=_bolum;
+        noGetir.value=_no;
+        document.getElementById('doktorkydt').addEventListener("click",(e)=>{
+            var doktor1=new Doktor(_id,isimGetir.value,noGetir.value,bolumGetir.value);
+            db.ref("Doktor/"+_id).set(doktor1);
+            window.alert('Değişiklikler Kaydeddildi!');
+            window.location.assign("http://localhost/admin/main/y%C3%B6netici_doktorlar.html")
+        });
+        // Popup Al
+        var modal = document.getElementById('myModal');
+        modal.style.display = "block";
+        // Kipi kapatan <span> öğesini edinin
+        var span = document.getElementsByClassName("close")[0];
+        // Kullanıcı <span> (x) düğmesini tıkladığında, popup
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+        // Kullanıcı modelden başka herhangi bir yeri tıklattıysa, onu kapatın.
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
+    function  doktorSil(_id) {
+        var cevap = confirm("silmek istediginize emin misiniz?");
+
+        if (cevap == true) {
+
+            var silinecekdktr=firebase.database().ref("Doktor/"+_id);
+            silinecekdktr.remove();
+            alert("silindi");
+            window.location.assign("http://localhost/admin/main/y%C3%B6netici_doktorlar.html")
+
+        }
+    }
+
+    function cikis() {
+        firebase.auth().signOut().then(function() {
+            // Sign-out successful.
+            window.alert("Çıkış Yapıldı!");
+        }).catch(function(error) {
+            // An error happened.
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../css/adminstyle.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link href="../css/style.css" rel="stylesheet">
+    <title>Hakkımızda</title>
+</head>
+<body>
+<header class="ana_menu" style="height: 80px">
+    <div>
+        <div class="logo">
+            <div>
+                <img src="../images/logo.png" style="padding-top: 20px;width: 200px">
+            </div>
+        </div>
+        <div style="float: right; padding-bottom: 20px; padding-right: 50px" >
+            <ul class="menu">
+                <li><a href="yonetici_anasayfa.html">ANA SAYFA</a></li>
+                <li><a href="yonetici_hakkimizda.html">HAKKIMIZDA</a></li>
+                <li><a  href="yönetici_doktorlar.html">DOKTORLARIMIZ</a></li>
+                <li><a  style="color:#3977FF" href="yönetici_iletisim.html">İLETİŞİM</a></li>
+                <li><a href="index.html"><button style="margin-top: 7px;margin-left: 20px" class="button" onclick="cikis()">Çıkış Yap</button></a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+
+<div style="padding-top: 70px;background-color: #f8f8f8;" >
+    <button class="button" onclick="bilgGuncelle()" style="margin-bottom: 20px;margin-left: 600px">Bilgileri Güncelle</button>
+
+</div>
+
+<div id="myModal" class="modal" >
+    <div class="modal-content" style="width: 40%">
+        <span class="close">&times;</span>
+        <p style="padding-left: 30px">Bilgileri Güncelle</p>
+
+        <div style="padding-left: 30px">
+            <div style="float: left;padding-right: 50px" >
+                <label >
+                    <span>Mail :</span><br><input class="input" type="email" name="mail" id="pop_up_mail"><br>
+                </label><br>
+                <label>
+                    <span>Cep numarası :</span><br><input class="input" type="number" name="cep" id="pop_up_cep"><br>
+                </label><br>
+                <label>
+                    <span>Adres :</span><br><input class="input" type="text" name="adres" id="pop_up_adres"><br>
+                </label>
+            </div>
+
+            <div  style="padding-left: 30px">
+                <label><br><br>
+                    <span>Çalışma Saatleri :</span><br><br>
+                    <label>
+                        <span>Hafta İçi :</span><br><input class="input" type="text" name="no" id="pop_up_hici"><br><br>
+                        <span>Hafta Sonu :</span><br><input class="input" type="text" name="no" id="pop_up_hsonu"><br>
+                    </label>
+                </label>
+
+            </div>
+
+            <label>
+                <button style="margin-top: 10px" type="button" onclick="bilgikydt()" class="button"  >Kaydet</button>
+            </label>
+        </div>
+
+
+    </div>
+</div>
+
+<footer class="iletisim">
+    <div style="float: left">
+        <div class="iletisim_kurumsal">
+            <h1>Kurumsal</h1>
+            <p>Galeri</p>
+            <p>Kalite Yönetim Birimi</p>
+            <p>Misyon, Vizyon ve Değer</p>
+        </div>
+        <div style="margin-top: 100px;margin-left: 150px" id="calismaSaatleri">
+
+        </div>
+    </div>
+
+    <div style="float: left; padding-left: 50px">
+
+        <div class="iletisim_iletisime_gec" id="iletisimBilgileri">
+
+        </div>
+
+        <div class="iletisim_sosyal_medya">
+            <h1>Bizi Takip Edin</h1>
+            <a href="#">
+                <i class="fa fa-twitter" style="color: #ffffff;font-size: 20px;padding-right: 10px"></i>
+            </a>
+            <a href="#">
+                <i class="fa fa-facebook" style="color: #ffffff;font-size: 25px;padding-right: 10px"></i>
+            </a>
+            <a href="#">
+                <i class="fa fa-instagram" style="color: #ffffff;font-size: 25px;padding-right: 10px"></i>
+            </a>
+            <a href="#">
+                <i class="fa fa-youtube" style="color: #ffffff;font-size: 25px;padding-right: 10px"></i>
+            </a>
+        </div>
+    </div>
+
+    <div style="float: left;margin-left: 150px;margin-top: 60px">
+        <div id="adresBilgileri">
+
+        </div>
+        <div>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d200065.39628694617!2d26.93963012194536!3d38.417860687838775!
+        2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14bbd862a762cacd%3A0x628cbba1a59ce8fe!2zxLB6bWly!5e0!3m2!1str!2str!4v1570221
+        319184!5m2!1str!2str" width="400" height="300" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+        </div>
+
+    </div>
+
+</footer>
+
+
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js"></script>
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyC_hdysQMkDUxJ1pM3cvuccc3NkVvq0pbQ",
+        authDomain: "umuthastahanesi-68cb3.firebaseapp.com",
+        databaseURL: "https://umuthastahanesi-68cb3.firebaseio.com",
+        projectId: "umuthastahanesi-68cb3",
+        storageBucket: "umuthastahanesi-68cb3.appspot.com",
+        messagingSenderId: "828637673911",
+        appId: "1:828637673911:web:94cf95919fee2ee2f79032",
+        measurementId: "G-R6PNK9SC1G"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+</script>
+<script>
+
+    function bilgGuncelle() {
+
+        var modal = document.getElementById('myModal');
+        modal.style.display = "block";
+        // Kipi kapatan <span> öğesini edinin
+        var span = document.getElementsByClassName("close")[0];
+        // Kullanıcı <span> (x) düğmesini tıkladığında, popup
+        span.onclick = function() {
+            modal.style.display = "none";
+        };
+        // Kullanıcı modelden başka herhangi bir yeri tıklattıysa, onu kapatın.
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        };
+        var cepGetir=document.getElementById('pop_up_cep');
+        var adresGetir=document.getElementById('pop_up_adres');
+        var hiciGetir=document.getElementById('pop_up_hici');
+        var hsonuGetir=document.getElementById('pop_up_hsonu');
+        var mailGetir=document.getElementById('pop_up_mail');
+
+        var iletisim=firebase.database().ref("İletişim");
+        iletisim.on("value",function (datasnapshot) {
+            var data=datasnapshot.val();
+            adresGetir.value=data.adres;
+            cepGetir.value=data.cep; mailGetir.value=data.mail;
+
+
+        });
+        var csaat=firebase.database().ref().child("İletişim");
+        csaat.on("child_added",snap=>{
+            var hici=snap.child("hafta içi").val();
+            var hsonu=snap.child("hafta sonu").val();
+            hiciGetir.value=hici;
+            hsonuGetir.value=hsonu;
+        });
+    }
+
+    function bilgikydt() {
+        db = firebase.database();
+        var yeniCep=document.getElementById("pop_up_cep");
+        var yeniMail=document.getElementById("pop_up_mail");
+        var yeniAdres=document.getElementById("pop_up_adres");
+        var yeniHici=document.getElementById("pop_up_hici");
+        var yeniHsonu=document.getElementById("pop_up_hsonu");
+        db.ref().child("İletişim").child("adres").set(yeniAdres.value);
+        db.ref().child("İletişim").child("mail").set(yeniMail.value);
+        db.ref().child("İletişim").child("cep").set(yeniCep.value);
+        db.ref().child("İletişim").child("çalışma saatleri").child("hafta içi").set(yeniHici.value);
+        db.ref().child("İletişim").child("çalışma saatleri").child("hafta sonu").set(yeniHsonu.value);
+
+        window.location.assign("http://localhost/admin/main/y%C3%B6netici_iletisim.html");
+        window.alert('Bilgiler kaydedildi!');
+
+    }
+
+    yeniBilgigetir();
+    function yeniBilgigetir() {
+        var iletisimb=firebase.database().ref().child("İletişim");
+        iletisimb.on("child_added",snap=> {
+            var haftaici = snap.child("hafta içi").val();
+            var haftasonu = snap.child("hafta sonu").val();
+            var hi=haftaici.value;
+            var hs=haftasonu.value;
+            document.getElementById("calismaSaatleri").innerHTML += `
+              <h1>Çalışma Saatlerimiz</h1>
+            <table>
+                <tr>
+                    <td>
+                        <h1>Hafta İçi</h1>
+                    </td>
+                    <td style="padding-left: 40px">
+                        <p>${haftaici}</p>
+                    </td>
+                </tr>
+
+            </table>
+            <div>
+                <hr style="size: 2px; width: 200px; color: rgba(86,146,255,0.46)"/>
+            </div>
+            <table>
+                <tr>
+                    <td>
+                        <h1>Cumartesi</h1>
+                    </td>
+                    <td style="padding-left: 30px">
+                        <p>${haftasonu}</p>
+                    </td>
+                </tr>
+            </table>
+            `
+        });
+
+        var iletisimbilg=firebase.database().ref("İletişim");
+        iletisimbilg.on("value",function (data) {
+            var iletisim = data.val();
+            document.getElementById("iletisimBilgileri").innerHTML+=`
+             <h1>iletişime Geç</h1>
+            <div>
+                <i class="fa fa-envelope-o" style="color: #ffffff;padding-bottom: 16px">
+                    <a href="#" style="color: #FFFFFF;padding-left: 10px">
+                       ${iletisim.mail}
+                    </a>
+                </i>
+            </div>
+            <div>
+                <i class="fa fa-phone" style="color: #ffffff">
+                    <a href="#" style="color: #FFFFFF;padding-left: 10px">
+                        ${iletisim.cep}
+                    </a>
+                </i>
+            </div>
+            `
+            document.getElementById("adresBilgileri").innerHTML+=`
+            <h1>Adresimiz</h1>
+            <i class="fa fa-map-marker" style="color: #ffffff;padding-bottom: 30px;">
+                <a href="#" style="color: #FFFFFF;padding-left: 10px">
+                    ${iletisim.adres}
+                </a>
+            </i>
+            `
+        });
+    }
+
+    function cikis() {
+        firebase.auth().signOut().then(function() {
+            // Sign-out successful.
+            window.alert("Çıkış Yapıldı!");
+        }).catch(function(error) {
+            // An error happened.
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="../css/adminstyle.css">
+    <title>Yönetici Giriş Sayfası</title>
+
+</head>
+<body>
+
+
+<div id="giris_div" style="margin-top: 100px">
+    <form action="#" method="post" class="smart-green" style="width:300px">
+        <h1>Yönetici Girişi
+        </h1>
+
+        <label>
+            <span>Email :</span>
+            <input id="email" type="email" name="email" />
+        </label>
+
+        <label style="margin-top: 10px">
+            <span>Şifre :</span>
+            <input id="sifre" type="password" name="sifre" />
+        </label>
+
+        <label>
+            <span> </span>
+            <input type="button" onclick="giris()" class="button" value="Giriş Yap"  />
+        </label>
+    </form>
+
+</div>
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.2.0/firebase-database.js"></script>
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyC_hdysQMkDUxJ1pM3cvuccc3NkVvq0pbQ",
+        authDomain: "umuthastahanesi-68cb3.firebaseapp.com",
+        databaseURL: "https://umuthastahanesi-68cb3.firebaseio.com",
+        projectId: "umuthastahanesi-68cb3",
+        storageBucket: "umuthastahanesi-68cb3.appspot.com",
+        messagingSenderId: "828637673911",
+        appId: "1:828637673911:web:94cf95919fee2ee2f79032",
+        measurementId: "G-R6PNK9SC1G"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+</script>
+<script src="index.js"></script>
+<script>
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            // User is signed in.
+            window.location = "http://localhost/admin/main/yonetici_anasayfa.html"
+
+        } else {
+            // No user is signed in.
+
+        }
+    });
+
+
+    function giris() {
+        var email=document.getElementById("email").value;
+        var sifre=document.getElementById("sifre").value;
+
+        firebase.auth().signInWithEmailAndPassword(email, sifre).catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // ...
+            window.alert("Hata: "+errorMessage);
+
+        });
+    }
+</script>
+</body>
+</html>
